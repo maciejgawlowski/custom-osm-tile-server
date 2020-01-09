@@ -1,0 +1,22 @@
+version: '3'
+services:
+  tileserver:
+    container_name: tileserver
+    restart: always
+    image: overv/openstreetmap-tile-server
+    command: run
+    ports:
+      - "1080:80"
+    environment:
+      - THREADS=4
+    volumes:
+      - pgdata:/var/lib/postgresql/12/main
+      - rendered_tiles:/var/lib/mod_tile
+
+volumes:
+  pgdata:
+    external:
+      name: openstreetmap-data
+  rendered_tiles:
+    external:
+      name: openstreetmap-rendered-tiles
